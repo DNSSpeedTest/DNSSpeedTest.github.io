@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS Speed Test | Find The Fastest DNS Server</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Find the fastest DNS server for your connection. Our free tool tests the performance and response time of popular public DNS providers like Cloudflare, Google, and OpenDNS to help you boost your internet speed and reliability.">
+  <meta name="keywords" content="DNS speed test, fastest DNS, DNS benchmark, DNS performance, check DNS, internet speed, Cloudflare DNS, Google DNS, OpenDNS, Quad9">
+  <meta name="author" content="DNS Speed Test">
+  <link rel="canonical" href="https://dns-speed-test.example.com/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dns-speed-test.example.com/">
+  <meta property="og:title" content="DNS Speed Test | Find The Fastest DNS Server For You">
+  <meta property="og:description" content="Instantly test and compare the performance of popular DNS servers like Cloudflare, Google, and OpenDNS from your location to boost your internet speed.">
+  <meta property="og:image" content="https://i.imgur.com/g1bwxk6.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://dns-speed-test.example.com/">
+  <meta property="twitter:title" content="DNS Speed Test | Find The Fastest DNS Server For You">
+  <meta property="twitter:description" content="Instantly test and compare the performance of popular DNS servers like Cloudflare, Google, and OpenDNS from your location to boost your internet speed.">
+  <meta property="twitter:image" content="https://i.imgur.com/g1bwxk6.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @import url('https://rsms.me/inter/inter.css');
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "DNS Speed Test",
+    "description": "A free online tool to benchmark and find the fastest DNS server for your internet connection. Test popular services like Cloudflare, Google, and OpenDNS to improve your browsing speed and reliability.",
+    "applicationCategory": "Utilities",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "url": "https://dns-speed-test.example.com/"
+  }
+  </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-900 text-gray-200">
+  
+<main class="min-h-screen container mx-auto p-4 md:p-8 flex flex-col items-center">
+  <header class="text-center w-full max-w-4xl mb-8">
+    <div class="flex items-center justify-center gap-4 mb-4">
+      <i class="fa-solid fa-network-wired text-4xl text-cyan-400" aria-hidden="true"></i>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white">DNS Speed Test</h1>
+    </div>
+    <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
+      Find out which DNS server is the fastest for you. Every time you visit a website, your device performs a DNS lookup. Using a faster DNS provider can reduce this lookup time, making your internet feel snappier and more responsive. Our tool benchmarks your connection against popular public DNS services to find the one with the lowest latency from your location.
+    </p>
+  </header>
+
+  <div id="button-container" class="w-full max-w-4xl text-center mb-10">
+      <button id="start-test-button" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-4 px-8 rounded-lg shadow-lg transition-transform duration-200 ease-in-out hover:scale-105 text-xl">
+        <i class="fa-solid fa-play mr-2" aria-hidden="true"></i>
+        Start Speed Test
+      </button>
+      <button id="reset-test-button" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-4 px-8 rounded-lg shadow-lg transition-transform duration-200 ease-in-out hover:scale-105 text-xl hidden">
+        <i class="fa-solid fa-arrow-rotate-left mr-2" aria-hidden="true"></i>
+        Test Again
+      </button>
+  </div>
+
+  <section class="w-full max-w-4xl">
+    <div id="fastest-provider-container" class="hidden bg-slate-800 border border-cyan-500 rounded-lg p-6 mb-8 shadow-2xl animate-fade-in">
+        <!-- Content will be injected by JS -->
+    </div>
+
+    <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Result cards will be injected by JS -->
+    </div>
+  </section>
+  
+  <section class="w-full max-w-4xl mt-16 text-left">
+    <h2 class="text-3xl font-bold text-center text-white mb-6">Why DNS Speed Matters</h2>
+    <div class="space-y-6 text-slate-300 bg-slate-800/50 p-8 rounded-lg border border-slate-700">
+      <div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-2">What is DNS?</h3>
+        <p>
+          Think of the Domain Name System (DNS) as the internet's phonebook. It translates human-friendly domain names (like <code>www.google.com</code>) into computer-friendly IP addresses (like <code>172.217.169.4</code>). This translation has to happen for almost everything you do online.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-2">How Does it Affect Speed?</h3>
+        <p>
+          Before your browser can load a website, it must first get the IP address from a DNS server. The time this takes is called DNS latency. While it's often measured in milliseconds, these small delays happen constantly and add up, affecting how quickly pages start to load. A faster DNS server means a faster start to your browsing experience.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-2">Beyond Speed: Security & Privacy</h3>
+        <p>
+          Many of the DNS providers listed here offer more than just speed. Some provide enhanced security by blocking access to malicious websites (phishing sites, malware domains) or offer privacy features by not logging your query data. Choosing a good DNS provider can be a simple step to a faster and safer internet.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="w-full max-w-4xl mt-16 text-left">
+    <h2 class="text-3xl font-bold text-center text-white mb-6">Frequently Asked Questions (FAQ)</h2>
+    <div class="space-y-4 bg-slate-800/50 p-8 rounded-lg border border-slate-700">
+      
+      <details class="group">
+        <summary class="flex items-center justify-between cursor-pointer list-none py-2">
+          <span class="text-xl font-semibold text-cyan-400">How do I change my DNS server?</span>
+          <span class="transition group-open:rotate-180 text-slate-500">
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </span>
+        </summary>
+        <p class="text-slate-300 mt-3 group-open:animate-fade-in">
+          Changing your DNS server can be done in your device's network settings (computer, phone, router). Each operating system is different. Generally, you'll go to your Wi-Fi or Ethernet settings, find the DNS section, and manually enter the primary and secondary IP addresses of the provider you choose (e.g., 1.1.1.1 and 1.0.0.1 for Cloudflare). Changing it on your router applies the new DNS to all devices on your network.
+        </p>
+      </details>
+      
+      <div class="border-t border-slate-700"></div>
+
+      <details class="group">
+        <summary class="flex items-center justify-between cursor-pointer list-none py-2">
+          <span class="text-xl font-semibold text-cyan-400">Is it safe to use these DNS servers?</span>
+          <span class="transition group-open:rotate-180 text-slate-500">
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </span>
+        </summary>
+        <p class="text-slate-300 mt-3 group-open:animate-fade-in">
+          Yes, all the DNS providers listed here are reputable public services. Many, like Cloudflare and Quad9, offer enhanced privacy by not logging your DNS queries and security by blocking access to known malicious sites. They are often safer and more private than the default DNS server provided by your Internet Service Provider (ISP).
+        </p>
+      </details>
+
+      <div class="border-t border-slate-700"></div>
+
+      <details class="group">
+        <summary class="flex items-center justify-between cursor-pointer list-none py-2">
+          <span class="text-xl font-semibold text-cyan-400">Which DNS is best for gaming?</span>
+          <span class="transition group-open:rotate-180 text-slate-500">
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </span>
+        </summary>
+        <p class="text-slate-300 mt-3 group-open:animate-fade-in">
+          For gaming, the best DNS is the one with the lowest latency (ping). A lower latency means a quicker response time between you and the game server. This tool helps you find exactly that. The provider with the lowest 'ms' result in this test will generally be the best for your gaming experience.
+        </p>
+      </details>
+      
+      <div class="border-t border-slate-700"></div>
+
+      <details class="group">
+        <summary class="flex items-center justify-between cursor-pointer list-none py-2">
+          <span class="text-xl font-semibold text-cyan-400">What do the result colors mean?</span>
+          <span class="transition group-open:rotate-180 text-slate-500">
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </span>
+        </summary>
+        <div class="text-slate-300 mt-3 group-open:animate-fade-in">
+          The colors give a quick visual indication of the latency:
+          <ul class="list-disc list-inside mt-2 space-y-1">
+            <li><span class="text-green-400 font-semibold">Green:</span> Excellent latency (under 100ms).</li>
+            <li><span class="text-yellow-400 font-semibold">Yellow:</span> Good latency (100ms - 250ms).</li>
+            <li><span class="text-red-400 font-semibold">Red:</span> Slow latency (over 250ms) or the test failed.</li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <footer class="text-center mt-12 text-slate-500">
+    <p><a href="#" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300">DNS Speed Test</a></p>
+  </footer>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const dnsApp = {
+        // --- STATE ---
+        testStatus: 'idle', // 'idle', 'testing', 'complete'
+        testResults: [],
+        dnsProviders: [
+            { name: 'Cloudflare', ip: '1.1.1.1', ipSecondary: '1.0.0.1', testDomain: 'cloudflare.com' },
+            { name: 'Google', ip: '8.8.8.8', ipSecondary: '8.8.4.4', testDomain: 'google.com' },
+            { name: 'OpenDNS', ip: '208.67.222.222', ipSecondary: '208.67.220.220', testDomain: 'opendns.com' },
+            { name: 'Quad9', ip: '9.9.9.9', ipSecondary: '149.112.112.112', testDomain: 'quad9.net' },
+            { name: 'Comodo Secure DNS', ip: '8.26.56.26', ipSecondary: '8.20.247.20', testDomain: 'comodoca.com' },
+            { name: 'AdGuard DNS', ip: '94.140.14.14', ipSecondary: '94.140.15.15', testDomain: 'adguard.com' },
+            { name: 'CleanBrowsing', ip: '185.228.168.9', ipSecondary: '185.228.169.9', testDomain: 'cleanbrowsing.org' },
+            { name: 'Yandex.DNS', ip: '77.88.8.8', ipSecondary: '77.88.8.1', testDomain: 'yandex.com' },
+            { name: 'Neustar UltraDNS', ip: '156.154.70.1', ipSecondary: '156.154.71.1', testDomain: 'neustar.biz' },
+            { name: 'Alternate DNS', ip: '76.76.19.19', ipSecondary: '23.253.163.53', testDomain: 'alternate.org' },
+            { name: 'Control D', ip: '76.76.2.0', ipSecondary: '76.76.10.0', testDomain: 'controld.com' },
+            { name: 'DNS.WATCH', ip: '84.200.69.80', ipSecondary: '84.200.70.40', testDomain: 'dns.watch' },
+            { name: 'Verisign', ip: '64.6.64.6', ipSecondary: '64.6.65.6', testDomain: 'verisign.com' },
+            { name: 'SafeDNS', ip: '195.46.39.39', ipSecondary: '195.46.39.40', testDomain: 'safedns.com' }
+        ],
+
+        // --- DOM ELEMENTS ---
+        elements: {
+            startButton: document.getElementById('start-test-button'),
+            resetButton: document.getElementById('reset-test-button'),
+            resultsGrid: document.getElementById('results-grid'),
+            fastestProviderContainer: document.getElementById('fastest-provider-container'),
+        },
+
+        // --- METHODS ---
+        init() {
+            this.elements.startButton.addEventListener('click', () => this.startTest());
+            this.elements.resetButton.addEventListener('click', () => this.resetTest());
+            this.elements.resultsGrid.addEventListener('click', (e) => this.handleCopyClick(e));
+            this.renderInitialState();
+        },
+
+        async testDnsServer(domain, samples = 5) {
+            let totalTime = 0;
+            let successfulSamples = 0;
+
+            for (let i = 0; i < samples; i++) {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+                const startTime = performance.now();
+
+                try {
+                    const randomSubdomain = `perf-test-${Date.now()}-${Math.random()}`;
+                    const url = `https://${randomSubdomain}.${domain}/favicon.ico`;
+                    await fetch(url, { method: 'HEAD', mode: 'no-cors', signal: controller.signal });
+                } catch (error) {
+                    // Expected to fail
+                } finally {
+                    clearTimeout(timeoutId);
+                    const endTime = performance.now();
+                    const duration = endTime - startTime;
+                    if (duration < 2000) {
+                        totalTime += duration;
+                        successfulSamples++;
+                    }
+                }
+            }
+            if (successfulSamples === 0) return Infinity;
+            return Math.round(totalTime / successfulSamples);
+        },
+
+        async startTest() {
+            this.testStatus = 'testing';
+            this.updateButtonVisibility();
+            this.elements.fastestProviderContainer.classList.add('hidden');
+            
+            this.testResults = this.dnsProviders.map(p => ({ ...p, latency: null, status: 'pending' }));
+            this.renderResults();
+
+            for (let i = 0; i < this.dnsProviders.length; i++) {
+                this.testResults[i].status = 'testing';
+                this.renderResults();
+
+                const latency = await this.testDnsServer(this.dnsProviders[i].testDomain);
+                this.testResults[i].latency = latency;
+                this.testResults[i].status = 'complete';
+                this.renderResults();
+            }
+
+            this.testStatus = 'complete';
+            this.renderFastestProvider();
+        },
+
+        resetTest() {
+            this.testStatus = 'idle';
+            this.updateButtonVisibility();
+            this.elements.fastestProviderContainer.classList.add('hidden');
+            this.renderInitialState();
+        },
+
+        renderResults() {
+            this.elements.resultsGrid.innerHTML = this.testResults.map(result => this.createCardHTML(result)).join('');
+        },
+
+        renderInitialState() {
+             this.testResults = this.dnsProviders.map(p => ({ ...p, latency: null, status: 'idle' }));
+             this.renderResults();
+        },
+        
+        getLatencyColorClass(latency) {
+            if (latency === null || latency === Infinity) return 'text-slate-500';
+            if (latency < 100) return 'text-green-400';
+            if (latency < 250) return 'text-yellow-400';
+            return 'text-red-400';
+        },
+
+        getBorderColorClass(result) {
+            if (result.status !== 'complete') return 'border-slate-700';
+            const latency = result.latency;
+            if (latency === null || latency === Infinity) return 'border-red-500';
+            if (latency < 100) return 'border-green-500';
+            if (latency < 250) return 'border-yellow-500';
+            return 'border-red-500';
+        },
+
+        createCardHTML(result) {
+            const baseClasses = 'bg-slate-800 rounded-lg p-5 shadow-lg border transition-all duration-300 flex flex-col justify-between h-full';
+            const borderColor = this.getBorderColorClass(result);
+            const isTesting = result.status === 'testing' ? 'animate-pulse' : '';
+
+            const latencyDisplay = () => {
+                switch (result.status) {
+                    case 'testing':
+                        return `<div class="flex items-center justify-end text-cyan-400">
+                                  <i class="fa-solid fa-spinner fa-spin mr-2" aria-hidden="true"></i>
+                                  <span class="text-lg">Testing...</span>
+                                </div>`;
+                    case 'complete':
+                        if (result.latency !== null && result.latency !== Infinity) {
+                            return `<p class="text-4xl font-mono font-bold ${this.getLatencyColorClass(result.latency)}">
+                                      ${result.latency}<span class="text-2xl text-slate-400 ml-1">ms</span>
+                                    </p>`;
+                        }
+                        return `<p class="text-2xl font-bold text-red-500">Failed</p>`;
+                    default: // idle or pending
+                        return `<p class="text-4xl font-mono font-bold text-slate-600">
+                                  --<span class="text-2xl text-slate-600 ml-1">ms</span>
+                                </p>`;
+                }
+            };
+            
+            const copyButton = (ip, type) => {
+                return `<button type="button" class="copy-button flex items-center gap-2 group text-left w-full" data-ip="${ip}" data-ip-type="${type}" aria-label="Copy ${type} IP address ${ip}">
+                            <span class="text-slate-400 font-mono text-sm group-hover:text-slate-200 transition-colors">${ip}</span>
+                            <span class="relative w-4 h-4 text-slate-500">
+                                <i class="fa-regular fa-copy copy-icon group-hover:text-cyan-400 transition-colors absolute top-0 left-0" aria-hidden="true"></i>
+                                <i class="fa-solid fa-check check-icon text-green-400 absolute top-0 left-0 hidden" aria-hidden="true"></i>
+                            </span>
+                        </button>`;
+            };
+
+            return `
+                <div class="${baseClasses} ${borderColor} ${isTesting}">
+                    <div>
+                        <h3 class="text-xl font-semibold text-white">${result.name}</h3>
+                        <div class="mt-1">
+                            ${copyButton(result.ip, 'primary')}
+                            ${result.ipSecondary ? `<div class="mt-1">${copyButton(result.ipSecondary, 'secondary')}</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="mt-4 text-right">
+                        ${latencyDisplay()}
+                    </div>
+                </div>
+            `;
+        },
+
+        renderFastestProvider() {
+            const validResults = this.testResults.filter(r => r.latency !== null && r.latency !== Infinity);
+            if (validResults.length === 0) return;
+
+            const fastest = validResults.reduce((f, c) => c.latency < f.latency ? c : f);
+            
+            this.elements.fastestProviderContainer.innerHTML = `
+                <h2 class="text-2xl font-semibold text-center mb-4 text-cyan-400">Fastest DNS Server</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-center">
+                    <div>
+                        <p class="text-4xl font-bold text-white">${fastest.name}</p>
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-6 justify-center mt-2">
+                            <p class="text-slate-400 font-mono"><span class="font-sans text-slate-500 font-semibold">Primary:</span> ${fastest.ip}</p>
+                            <p class="text-slate-400 font-mono"><span class="font-sans text-slate-500 font-semibold">Secondary:</span> ${fastest.ipSecondary}</p>
+                        </div>
+                    </div>
+                    <div class="${this.getLatencyColorClass(fastest.latency)}">
+                        <p class="text-5xl font-mono font-bold">${fastest.latency}<span class="text-3xl ml-1">ms</span></p>
+                        <p class="text-lg">Average Latency</p>
+                    </div>
+                </div>
+            `;
+            this.elements.fastestProviderContainer.classList.remove('hidden');
+        },
+        
+        handleCopyClick(event) {
+            const button = event.target.closest('.copy-button');
+            if (!button) return;
+            
+            const ip = button.dataset.ip;
+            navigator.clipboard.writeText(ip).then(() => {
+                const copyIcon = button.querySelector('.copy-icon');
+                const checkIcon = button.querySelector('.check-icon');
+                copyIcon.classList.add('hidden');
+                checkIcon.classList.remove('hidden');
+                setTimeout(() => {
+                    copyIcon.classList.remove('hidden');
+                    checkIcon.classList.add('hidden');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy IP:', err);
+            });
+        },
+
+        updateButtonVisibility() {
+            if (this.testStatus === 'testing' || this.testStatus === 'complete') {
+                this.elements.startButton.classList.add('hidden');
+                this.elements.resetButton.classList.remove('hidden');
+            } else { // idle
+                this.elements.startButton.classList.remove('hidden');
+                this.elements.resetButton.classList.add('hidden');
+            }
+        }
+    };
+
+    dnsApp.init();
+});
+</script>
+
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
